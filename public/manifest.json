@@ -1,0 +1,13 @@
+{
+  "name": "TaeMeta",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "manifest_version": 3,
+  "version": "0.0.1",
+  "description": "Watch your sites metadata.",  
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ]
+}
