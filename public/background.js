@@ -8,9 +8,7 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log('hola');
   if (message.type === "metadata") {
-    console.log(message.payload);
     metadata = message.payload;
   }
 });

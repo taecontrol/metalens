@@ -1,4 +1,4 @@
-const metadata = Array.from(document.querySelectorAll("meta"));
+const allMetaTags = Array.from(document.querySelectorAll("meta"));
 
 let twitterMetadata = {
   title: "",
@@ -7,7 +7,14 @@ let twitterMetadata = {
   url: "",
 };
 
-const twitterTags = metadata
+let openGraphMetadata = {
+  title: "",
+  description: "",
+  image: "",
+  url: "",
+};
+
+const twitterTags = allMetaTags
   .filter((tag) => tag.getAttribute("property")?.includes("twitter"))
   .map((tag) => {
     if (tag.getAttribute("property")?.includes("title")) {
@@ -34,14 +41,45 @@ const twitterTags = metadata
     };
   });
 
-const allMeta = {
+const openGraphTags = allMetaTags
+  .filter((tag) => tag.getAttribute("property")?.includes("og"))
+  .map((tag) => {
+    if (tag.getAttribute("property")?.includes("title")) {
+      openGraphMetadata.title = tag.content;
+    }
+
+    if (tag.getAttribute("property")?.includes("image")) {
+      openGraphMetadata.image = tag.content;
+    }
+
+    if (tag.getAttribute("property")?.includes("description")) {
+      openGraphMetadata.description = tag.content;
+    }
+
+    if (tag.getAttribute("property")?.includes("url")) {
+      openGraphMetadata.url = tag.content;
+    }
+
+    return {
+      title: tag.title,
+      content: tag.content,
+      property: tag.getAttribute("property"),
+      spec: "open-graph",
+    };
+  });
+
+const metadata = {
   twitter: {
-    twitterMetadata,
-    twitterTags,
+    metadata: twitterMetadata,
+    tags: twitterTags,
+  },
+  openGraph: {
+    metadata: openGraphMetadata,
+    tags: openGraphTags,
   }
-}
+};
 
 chrome.runtime.sendMessage({
   type: "metadata",
-  payload: { metadata: allMeta },
+  payload: metadata,
 });
