@@ -8,12 +8,14 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log('hola');
   if (message.type === "metadata") {
+    console.log(message.payload);
     metadata = message.payload;
   }
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "getMetadata") {
     sendResponse(metadata);
   }
