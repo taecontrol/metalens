@@ -9,7 +9,7 @@ function App() {
   const [metadata] = useMetadata();
 
   return (
-    <div className="w-96 h-96">
+    <div className="w-[450px] h-96">
       <div className="flex flex-col justify-center px-3 py-5 space-y-5 overscroll-y-auto">
         <div>
           <p className="text-xs font-semibold text-slate-700 text-center mb-5">
