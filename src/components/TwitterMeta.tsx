@@ -1,7 +1,7 @@
-import { metadataProps } from "../interfaces/metadata";
+import { MetadataProps } from "../interfaces/metadata";
 
 interface TwitterMetaProps {
-  props: metadataProps;
+  props: MetadataProps;
 }
 
 export default function TwitterMeta({ props }: TwitterMetaProps) {

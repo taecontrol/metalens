@@ -9,8 +9,7 @@ export default defineConfig({
     watch: {},
     rollupOptions: {
       input: [
-        'src/background.js',
-        'src/content-script.js'
+        'index.html'
       ],
       output: {
         entryFileNames: `js/[name].js`,

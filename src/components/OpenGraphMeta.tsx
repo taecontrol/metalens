@@ -1,7 +1,7 @@
-import { metadataProps } from "../interfaces/metadata";
+import { MetadataProps } from "../interfaces/metadata";
 
 interface OpenGraphMetaProps {
-  props: metadataProps;
+  props: MetadataProps;
 }
 
 export default function OpenGraphMeta({ props }: OpenGraphMetaProps) {

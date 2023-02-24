@@ -1,25 +1,25 @@
-export type tags = {
+export type Tags = {
   title: string;
   property: string;
   content: string;
   spec: string;
 };
 
-export type metadataProps = {
+export type MetadataProps = {
   title: string;
   description: string;
-  spec: string;
   image: string;
   url: string;
 };
 
-export interface metadata {
+export interface Metadata {
   twitter?: {
-    metadata: metadataProps;
-    tags: tags[];
+    metadata: MetadataProps;
+    tags: Tags[];
   };
   openGraph?: {
-    metadata: metadataProps;
-    tags: tags[];
+    metadata: MetadataProps;
+    tags: Tags[];
   };
+  url?: string;
 }

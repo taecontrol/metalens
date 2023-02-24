@@ -1,21 +1,12 @@
 import { useEffect, useState } from "react";
-import { metadata, metadataProps } from "./interfaces/metadata";
 import TwitterMeta from "./components/TwitterMeta";
 import OpenGraphMeta from "./components/OpenGraphMeta";
+import { Metadata } from "./interfaces/metadata";
+import getPageMetadata from "./reader";
+import useMetadata from "./hooks/useMetadata";
 
 function App() {
-  const [siteMetadata, setSiteMetadata] = useState<metadata | undefined>();
-
-  useEffect(() => {
-    chrome.runtime.sendMessage(
-      { type: "getMetadata" },
-      undefined,
-      (response) => {
-        setSiteMetadata(response);
-      }
-    );
-    () => chrome.runtime.onMessage.removeListener(() => true);
-  }, []);
+  const [metadata] = useMetadata();
 
   return (
     <div className="w-96 h-96">
@@ -24,20 +15,16 @@ function App() {
           <p className="text-xs font-semibold text-slate-700 text-center mb-5">
             Twitter
           </p>
-          {siteMetadata?.twitter && (
-            <TwitterMeta
-              props={siteMetadata.twitter.metadata as metadataProps}
-            />
+          {metadata?.twitter && (
+            <TwitterMeta props={metadata.twitter.metadata} />
           )}
         </div>
         <div>
           <p className="text-xs font-semibold text-slate-700 text-center mb-5">
             Open-Graph
           </p>
-          {siteMetadata?.openGraph && (
-            <OpenGraphMeta
-              props={siteMetadata.openGraph.metadata as metadataProps}
-            />
+          {metadata?.openGraph && (
+            <OpenGraphMeta props={metadata.openGraph.metadata} />
           )}
         </div>
       </div>
