@@ -8,12 +8,14 @@ function useMetadata() {
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       let tab = tabs[0];
+      let url = tabs[0].url;
 
-      if (tab.id) {
+      if (tab.id && url) {
         chrome.scripting
           .executeScript({
             target: { tabId: tab.id, allFrames: true },
             func: getPageMetadata,
+            args: [{ url }],
           })
           .then((results) => {
             if (results.length > 0) {

@@ -12,14 +12,14 @@ export type MetadataProps = {
   url: string;
 };
 
+export type MetadataObject = {
+  metadata: MetadataProps;
+  tags: Tags[];
+}
+
 export interface Metadata {
-  twitter?: {
-    metadata: MetadataProps;
-    tags: Tags[];
-  };
-  openGraph?: {
-    metadata: MetadataProps;
-    tags: Tags[];
-  };
+  twitter?: MetadataObject;
+  openGraph?: MetadataObject;
+  general?: MetadataObject;
   url?: string;
 }

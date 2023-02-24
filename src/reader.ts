@@ -1,6 +1,10 @@
 import { MetadataProps } from "./interfaces/metadata";
 
-export default function getPageMetadata() {
+type getPageMetadataProps = {
+  url: string;
+};
+
+export default function getPageMetadata({ url }: getPageMetadataProps) {
   const allMetaTags = Array.from(document.querySelectorAll("meta"));
 
   let twitterMetadata: MetadataProps = {
@@ -17,24 +21,39 @@ export default function getPageMetadata() {
     url: "",
   };
 
+  let generalMetadata: MetadataProps = {
+    title: "",
+    description: "",
+    image: "",
+    url,
+  };
+
+  const generalTags = allMetaTags.map((tag) => {
+    if (tag.name === "title") generalMetadata.title = tag.content;
+    if (tag.name === "description") generalMetadata.description = tag.content;
+
+    return {
+      title: tag.title,
+      content: tag.content,
+      property: "",
+      spec: "general",
+    };
+  });
+
   const twitterTags = allMetaTags
     .filter((tag) => tag.getAttribute("property")?.includes("twitter"))
     .map((tag) => {
-      if (tag.getAttribute("property")?.includes("title")) {
+      if (tag.getAttribute("property")?.includes("title"))
         twitterMetadata.title = tag.content;
-      }
 
-      if (tag.getAttribute("property")?.includes("image")) {
+      if (tag.getAttribute("property")?.includes("image"))
         twitterMetadata.image = tag.content;
-      }
 
-      if (tag.getAttribute("property")?.includes("description")) {
+      if (tag.getAttribute("property")?.includes("description"))
         twitterMetadata.description = tag.content;
-      }
 
-      if (tag.getAttribute("property")?.includes("url")) {
+      if (tag.getAttribute("property")?.includes("url"))
         twitterMetadata.url = tag.content;
-      }
 
       return {
         title: tag.title,
@@ -47,21 +66,17 @@ export default function getPageMetadata() {
   const openGraphTags = allMetaTags
     .filter((tag) => tag.getAttribute("property")?.includes("og"))
     .map((tag) => {
-      if (tag.getAttribute("property")?.includes("title")) {
+      if (tag.getAttribute("property")?.includes("title"))
         openGraphMetadata.title = tag.content;
-      }
 
-      if (tag.getAttribute("property")?.includes("image")) {
+      if (tag.getAttribute("property")?.includes("image"))
         openGraphMetadata.image = tag.content;
-      }
 
-      if (tag.getAttribute("property")?.includes("description")) {
+      if (tag.getAttribute("property")?.includes("description"))
         openGraphMetadata.description = tag.content;
-      }
 
-      if (tag.getAttribute("property")?.includes("url")) {
+      if (tag.getAttribute("property")?.includes("url"))
         openGraphMetadata.url = tag.content;
-      }
 
       return {
         title: tag.title,
@@ -79,6 +94,10 @@ export default function getPageMetadata() {
     openGraph: {
       metadata: openGraphMetadata,
       tags: openGraphTags,
+    },
+    general: {
+      metadata: generalMetadata,
+      tags: generalTags,
     },
     url: window.location.href,
   };

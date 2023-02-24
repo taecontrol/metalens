@@ -5,7 +5,8 @@
   "description": "Watch your sites metadata.",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "tabs"
   ],
   "action": {
     "default_popup": "index.html"
