@@ -8,23 +8,23 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
   const allMetaTags = Array.from(document.querySelectorAll("meta"));
 
   let twitterMetadata: MetadataProps = {
-    title: "",
-    description: "",
-    image: "",
-    url: "",
+    title: "Not found",
+    description: "Not found",
+    image: 'image-not-found.png',
+    url: "Not found",
   };
 
   let openGraphMetadata: MetadataProps = {
-    title: "",
-    description: "",
-    image: "",
-    url: "",
+    title: "Not found",
+    description: "Not found",
+    image: 'image-not-found.png',
+    url: "Not found",
   };
 
   let generalMetadata: MetadataProps = {
-    title: "",
-    description: "",
-    image: "",
+    title: "Not found",
+    description: "Not found",
+    image: 'image-not-found.png',
     url,
   };
 

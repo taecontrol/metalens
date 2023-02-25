@@ -7,15 +7,5 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     watch: {},
-    rollupOptions: {
-      input: [
-        'index.html'
-      ],
-      output: {
-        entryFileNames: `js/[name].js`,
-        chunkFileNames: `js/[name].js`,
-        assetFileNames: `js/[name].[ext]`
-      },
-    }
   },
 })
