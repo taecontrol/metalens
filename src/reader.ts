@@ -4,27 +4,29 @@ type getPageMetadataProps = {
   url: string;
 };
 
+const NOT_FOUND_IMAGE_PATH = 'image-not-found.png';
+
 export default function getPageMetadata({ url }: getPageMetadataProps) {
   const allMetaTags = Array.from(document.querySelectorAll("meta"));
 
   let twitterMetadata: MetadataProps = {
     title: "Not found",
     description: "Not found",
-    image: 'image-not-found.png',
+    image: NOT_FOUND_IMAGE_PATH,
     url: "Not found",
   };
 
   let openGraphMetadata: MetadataProps = {
     title: "Not found",
     description: "Not found",
-    image: 'image-not-found.png',
+    image: NOT_FOUND_IMAGE_PATH,
     url: "Not found",
   };
 
   let generalMetadata: MetadataProps = {
     title: "Not found",
     description: "Not found",
-    image: 'image-not-found.png',
+    image: NOT_FOUND_IMAGE_PATH,
     url,
   };
 
