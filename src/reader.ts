@@ -7,7 +7,7 @@ type getPageMetadataProps = {
 export default function getPageMetadata({ url }: getPageMetadataProps) {
   const NOT_FOUND_IMAGE_PATH = 'image-not-found.png';
 
-  const allMetaTags = Array.from(document.querySelectorAll("meta"));  
+  const ALL_META_TAGS = Array.from(document.querySelectorAll("meta"));  
 
   let twitterMetadata: MetadataProps = {
     title: "Not found",
@@ -30,7 +30,7 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
     url,
   };
 
-  const generalTags = allMetaTags.map((tag) => {
+  const generalTags = ALL_META_TAGS.map((tag) => {
     if (tag.name === "title") generalMetadata.title = tag.content;
     if (tag.name === "description") generalMetadata.description = tag.content;
 
@@ -42,7 +42,7 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
     };
   });
 
-  const twitterTags = allMetaTags
+  const twitterTags = ALL_META_TAGS
     .filter((tag) => tag.getAttribute("property")?.includes("twitter"))
     .map((tag) => {
       if (tag.getAttribute("property")?.includes("title"))
@@ -65,7 +65,7 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
       };
     });
 
-  const openGraphTags = allMetaTags
+  const openGraphTags = ALL_META_TAGS
     .filter((tag) => tag.getAttribute("property")?.includes("og"))
     .map((tag) => {
       if (tag.getAttribute("property")?.includes("title"))
