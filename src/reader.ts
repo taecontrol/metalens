@@ -4,10 +4,10 @@ type getPageMetadataProps = {
   url: string;
 };
 
-const NOT_FOUND_IMAGE_PATH = 'image-not-found.png';
-
 export default function getPageMetadata({ url }: getPageMetadataProps) {
-  const allMetaTags = Array.from(document.querySelectorAll("meta"));
+  const NOT_FOUND_IMAGE_PATH = 'image-not-found.png';
+
+  const allMetaTags = Array.from(document.querySelectorAll("meta"));  
 
   let twitterMetadata: MetadataProps = {
     title: "Not found",
