@@ -44,28 +44,10 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
     url,
   };
 
-  const includesTitle = (tag: HTMLMetaElement) => {
+  const includesAttribute = (tag: HTMLMetaElement, attribute: string) => {
     return (
-      tag.getAttribute("property")?.includes("title") ||
-      tag.name.includes("title")
-    );
-  };
-
-  const includesDescription = (tag: HTMLMetaElement) => {
-    return (
-      tag.getAttribute("property")?.includes("description") ||
-      tag.name.includes("description")
-    );
-  };
-  const includesImage = (tag: HTMLMetaElement) => {
-    return (
-      tag.getAttribute("property")?.includes("image") ||
-      tag.name.includes("image")
-    );
-  };
-  const includesUrl = (tag: HTMLMetaElement) => {
-    return (
-      tag.getAttribute("property")?.includes("url") || tag.name.includes("url")
+      tag.getAttribute("property")?.includes(attribute) ||
+      tag.name.includes(attribute)
     );
   };
 
@@ -75,16 +57,16 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
         tag.getAttribute("property")?.includes(standard) ||
         tag.name.includes(standard)
     ).forEach((tag) => {
-      if (includesTitle(tag))
+      if (includesAttribute(tag, "title"))
         siteMetadata[standard].metadata.title = tag.content;
 
-      if (includesImage(tag))
-        siteMetadata[standard].metadata.image = tag.content;
-
-      if (includesDescription(tag))
+      if (includesAttribute(tag, "description"))
         siteMetadata[standard].metadata.description = tag.content;
 
-      if (includesUrl(tag))
+      if (includesAttribute(tag, "image"))
+        siteMetadata[standard].metadata.image = tag.content;
+
+      if (includesAttribute(tag, "url"))
         siteMetadata[standard].metadata.url = new URL(tag.content).hostname;
     });
   };
