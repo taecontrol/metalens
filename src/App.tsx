@@ -25,7 +25,7 @@ function App() {
           <p className="text-[17px] font-semibold text-slate-700 text-left mb-2">
             Open Graph
           </p>
-          <OpenGraphMeta props={metadata?.openGraph} />
+          <OpenGraphMeta props={metadata?.og} />
         </div>
       </div>
     </div>

@@ -1,10 +1,3 @@
-export type Tags = {
-  title: string;
-  property: string;
-  content: string;
-  spec: string;
-};
-
 export type MetadataProps = {
   title: string;
   description: string;
@@ -14,12 +7,12 @@ export type MetadataProps = {
 
 export type MetadataObject = {
   metadata: MetadataProps;
-  tags: Tags[];
+  tags: HTMLMetaElement[] | HTMLElement[];
 }
 
 export interface Metadata {
-  twitter?: MetadataObject;
-  openGraph?: MetadataObject;
-  general?: MetadataObject;
-  url?: string;
+  twitter: MetadataObject;
+  og: MetadataObject;
+  general: MetadataObject;
+  url: string;
 }
