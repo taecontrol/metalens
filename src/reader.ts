@@ -44,31 +44,31 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
     url,
   };
 
-  const tagIncludesAttribute = (tag: HTMLMetaElement, attribute: string) => {
-    return (
-      tag.getAttribute("property")?.includes(attribute) ||
-      tag.name.includes(attribute)
-    );
-  };
+  const tagIncludesAttribute = (tag: HTMLMetaElement, attribute: string) =>
+    tag.getAttribute("property")?.includes(attribute) ||
+    tag.name.includes(attribute);
+
+  const tagHasAttribute = (tag: HTMLMetaElement, attribute: string) =>
+    tag.getAttribute("property") === attribute || tag.name === attribute;
 
   const setMetadataAndTags = (standard: protocol) => {
-    META_TAGS.filter(
-      (tag) => tagIncludesAttribute(tag, standard)
-    ).forEach((tag) => {
-      if (tagIncludesAttribute(tag, "title"))
-        siteMetadata[standard].metadata.title = tag.content;
+    META_TAGS.filter((tag) => tagIncludesAttribute(tag, standard)).forEach(
+      (tag) => {
+        if (tagHasAttribute(tag, `${standard}:title`))
+          siteMetadata[standard].metadata.title = tag.content;
 
-      if (tagIncludesAttribute(tag, "description"))
-        siteMetadata[standard].metadata.description = tag.content;
+        if (tagHasAttribute(tag, `${standard}:description`))
+          siteMetadata[standard].metadata.description = tag.content;
 
-      if (tagIncludesAttribute(tag, "image"))
-        siteMetadata[standard].metadata.image = tag.content;
+        if (tagHasAttribute(tag, `${standard}:image`))
+          siteMetadata[standard].metadata.image = tag.content;
 
-      if (tagIncludesAttribute(tag, "url"))
-        siteMetadata[standard].metadata.url = new URL(tag.content).hostname;
+        if (tagHasAttribute(tag, `${standard}:url`))
+          siteMetadata[standard].metadata.url = new URL(tag.content).hostname;
 
-      siteMetadata[standard].tags.push(Object.assign({}, tag));
-    });
+        siteMetadata[standard].tags.push(Object.assign({}, tag));
+      }
+    );
   };
 
   setMetadataAndTags("twitter");
