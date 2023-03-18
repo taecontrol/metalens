@@ -13,6 +13,8 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
 
   const META_TAGS = Array.from(document.querySelectorAll("meta"));
 
+  const TITLE = document.querySelector("title");
+
   const siteMetadata: Metadata = {
     twitter: {
       metadata: {
@@ -34,50 +36,46 @@ export default function getPageMetadata({ url }: getPageMetadataProps) {
     },
     general: {
       metadata: {
-        title: NOT_FOUND,
+        title: TITLE?.text ?? NOT_FOUND,
         description: NOT_FOUND,
         image: NOT_FOUND_IMAGE_PATH,
-        url: url,
+        url: url.split("&")[0],
       },
       tags: META_TAGS,
     },
     url,
   };
 
-  const tagIncludesAttribute = (tag: HTMLMetaElement, attribute: string) =>
-    tag.getAttribute("property")?.includes(attribute) ||
-    tag.name.includes(attribute);
-
-  const tagHasAttribute = (tag: HTMLMetaElement, attribute: string) =>
-    tag.getAttribute("property") === attribute || tag.name === attribute;
-
-  const setMetadataAndTags = (standard: protocol) => {
-    META_TAGS.filter((tag) => tagIncludesAttribute(tag, standard)).forEach(
-      (tag) => {
-        if (tagHasAttribute(tag, `${standard}:title`))
-          siteMetadata[standard].metadata.title = tag.content;
-
-        if (tagHasAttribute(tag, `${standard}:description`))
-          siteMetadata[standard].metadata.description = tag.content;
-
-        if (tagHasAttribute(tag, `${standard}:image`))
-          siteMetadata[standard].metadata.image = tag.content;
-
-        if (tagHasAttribute(tag, `${standard}:url`))
-          siteMetadata[standard].metadata.url = new URL(tag.content).hostname;
-
-        siteMetadata[standard].tags.push(Object.assign({}, tag));
-      }
-    );
-  };
-
-  setMetadataAndTags("twitter");
-  setMetadataAndTags("og");
+  const doesTagIncludesProperty = (tag: HTMLMetaElement, property: string) =>
+    tag.name === property || tag.getAttribute("property") === property;
 
   META_TAGS.forEach((tag) => {
-    if (tag.name === "title") siteMetadata.general.metadata.title = tag.content;
-    if (tag.name === "description")
-      siteMetadata.general.metadata.description = tag.content;
+    Array.from(["og", "twitter", "general"] as protocol[]).forEach(
+      (protocol: protocol) => {
+        let protocolFixed = "";
+
+        if (protocol === "og" || protocol === "twitter") {
+          protocolFixed = `${protocol}:`;
+        }
+
+        if (doesTagIncludesProperty(tag, protocolFixed + "title")) {
+          siteMetadata[protocol].metadata.title = tag.content;
+        }
+
+        if (doesTagIncludesProperty(tag, protocolFixed + "description")) {
+          siteMetadata[protocol].metadata.description = tag.content;
+        }
+
+        if (doesTagIncludesProperty(tag, protocolFixed + "image")) {
+          siteMetadata[protocol].metadata.image = tag.content;
+        }
+
+        if (doesTagIncludesProperty(tag, protocolFixed + "url")) {
+          let url = tag.content.replace(/.*?\./, "").replace(/\/.*/, "");
+          siteMetadata[protocol].metadata.url = url;
+        }
+      }
+    );
   });
 
   return siteMetadata;

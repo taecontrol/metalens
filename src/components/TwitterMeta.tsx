@@ -7,7 +7,7 @@ interface TwitterMetaProps {
 export default function TwitterMeta({ props }: TwitterMetaProps) {
   return (
     <div className="w-full h-full flex flex-col">
-      <img className="h-full w-full rounded-t-md" src={props?.metadata.image} />
+      <img className="h-60 w-full rounded-t-md object-cover" src={props?.metadata.image} />
       <div className="w-full py-2 pl-1 rounded-b-md border border-sky-800">
         <span className="font-bold text-slate-900 mb-1 text-sm">
           {props?.metadata.title}
